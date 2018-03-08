@@ -237,12 +237,12 @@ export default class Drawer extends Component {
       return true;
     }
     // swipe right to open left drawer
-    if (!leftDisabled && this.isLeft && x0 <= width * 0.2 && !isOpen && dx > 0) {
+    if (!leftDisabled && this.isLeft && x0 <= width * 0.2 && !isOpen && dx > 10) {
       this.isLeftActive = true;
       return true;
     }
     // swipe left to open right drawer
-    if (!rightDisabled && this.isRight && x0 >= this.MAX_DX && !isOpen && dx < 0) {
+    if (!rightDisabled && this.isRight && x0 >= this.MAX_DX && !isOpen && dx < -10) {
       this.isRightActive = true;
       return true;
     }
