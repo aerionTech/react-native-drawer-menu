@@ -8,7 +8,8 @@ import {
   StyleSheet,
   View,
   PanResponder,
-  Dimensions
+  Dimensions,
+  I18nManager,
 } from 'react-native';
 
 const {width} = Dimensions.get('window');
@@ -192,14 +193,27 @@ export default class Drawer extends Component {
   }
   _handlePanResponderMove (evt, gestureState) {
     let dx = gestureState.dx;
-    if (dx > 0 && dx <= this.MAX_DX) {
-      // swipe right
-      if (this.isRight && this.isRightOpen) return this._updateNativeStyles(-this.MAX_DX + dx);
-      if (this.isLeft && !this.isLeftOpen) this._updateNativeStyles(dx);
-    } else if (dx < 0 && dx >= -this.MAX_DX) {
-      // swipe left
-      if (this.isLeft && this.isLeftOpen) return this._updateNativeStyles(this.MAX_DX + dx);
-      if (this.isRight && !this.isRightOpen) this._updateNativeStyles(dx);
+
+    if (I18nManager.isRTL) {
+      if (dx > 0 && dx <= this.MAX_DX) {
+        // swipe right
+        if (this.isLeft && this.isLeftOpen) return this._updateNativeStyles(this.MAX_DX - dx);
+        if (this.isRight && !this.isRightOpen) this._updateNativeStyles(-dx);
+      } else if (dx < 0 && dx >= -this.MAX_DX) {
+        // swipe left
+        if (this.isRight && this.isRightOpen) return this._updateNativeStyles(-this.MAX_DX - dx);
+        if (this.isLeft && !this.isLeftOpen) this._updateNativeStyles(-dx);
+      }
+    } else {
+      if (dx > 0 && dx <= this.MAX_DX) {
+        // swipe right
+        if (this.isRight && this.isRightOpen) return this._updateNativeStyles(-this.MAX_DX + dx);
+        if (this.isLeft && !this.isLeftOpen) this._updateNativeStyles(dx);
+      } else if (dx < 0 && dx >= -this.MAX_DX) {
+        // swipe left
+        if (this.isLeft && this.isLeftOpen) return this._updateNativeStyles(this.MAX_DX + dx);
+        if (this.isRight && !this.isRightOpen) this._updateNativeStyles(dx);
+      }
     }
     // dx === 0 triggers tap event when drawer is opened.
   }
