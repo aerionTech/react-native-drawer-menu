@@ -12,7 +12,11 @@ import {
   I18nManager,
 } from 'react-native';
 
-const {width} = Dimensions.get('window');
+const width=(Dimensions.get('window').width > Dimensions.get('window').height)
+?
+Dimensions.get('window').width
+:
+Dimensions.get('window').height;
 
 import Animation from './Animation';
 
