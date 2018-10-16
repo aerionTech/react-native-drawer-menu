@@ -370,17 +370,17 @@ export default class Drawer extends Component {
     });
   }
   _updateNativeStyles (dx) {
-    this.styles.leftDrawer.style.left = -this.MAX_DX + dx;
-    this.styles.leftDrawer.style.right = width - dx;
-    this.styles.rightDrawer.style.left = width + dx;
-    this.styles.rightDrawer.style.right = -this.MAX_DX - dx;
+    const val = Math.round(dx * 1e0) / 1e0;
+    this.styles.leftDrawer.style.left = -this.MAX_DX + val;
+    this.styles.leftDrawer.style.right = width - val;
+    this.styles.rightDrawer.style.left = width + val;
+    this.styles.rightDrawer.style.right = -this.MAX_DX - val;
     this.styles.mask.style.backgroundColor = `rgba(0, 0, 0,
       ${(Math.abs(dx) / this.MAX_DX * this.MAX_ALPHA).toFixed(2)})`;
     this._leftDrawer && this._leftDrawer.setNativeProps(this.styles.leftDrawer);
     this._rightDrawer && this._rightDrawer.setNativeProps(this.styles.rightDrawer);
     this._mask && this._mask.setNativeProps(this.styles.mask);
     if (this.props.type === types.Default || dx === 0) {
-      const val = Math.round( dx * 1e0 ) / 1e0;
       this.styles.main.style.left = val;
       this.styles.main.style.right = -val;
       this._main && this._main.setNativeProps(this.styles.main);
